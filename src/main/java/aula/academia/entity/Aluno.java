@@ -1,0 +1,103 @@
+package aula.academia.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_alunos")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+public class Aluno {
+
+	
+	@Id
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	  private Long id;
+
+	  
+	  private String nome;
+
+	  @Column(unique = true)
+	  @Setter
+	  @Getter
+	  private String cpf;
+
+	  private String bairro;
+
+	  private LocalDate dataDeNascimento;
+
+	  @OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+	  @JsonIgnore
+	  private List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
+
+	  
+	  
+  public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public LocalDate getDataDeNascimento() {
+		return dataDeNascimento;
+	}
+
+	public void setDataDeNascimento(LocalDate dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
+
+	public List<AvaliacaoFisica> getAvaliacoes() {
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<AvaliacaoFisica> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+
+
+}
